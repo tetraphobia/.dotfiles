@@ -33,5 +33,10 @@
     # TODO Set firefox preferences here.
   };
 
+  # Configure kitty
+  programs.kitty = {
+    enable = true;
+  };
+
   home.stateVersion = "25.11";
 }
