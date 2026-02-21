@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
 {
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.useOSProber = true;
@@ -53,10 +56,30 @@
     defaultEditor = true;
   };
 
+  # Enable pipewire
+  services.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
 
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  # Fonts
+  fonts.packages = with pkgs; [
+    nerd-fonts.ubuntu
+    nerd-fonts.hack
+    noto-fonts
+    noto-fonts-color-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+    mplus-outline-fonts.githubRelease
+    dina-font
+    proggyfonts
+  ];
 
   system.stateVersion = "25.11"; # Did you read the comment?
 

@@ -1,15 +1,55 @@
 { config, pkgs, ... }:
 
 {
+  # Notification daemon
+  services.swaync = {
+    enable = true;
+    # TODO Configure swaync
+  };
+
+  # Qt Wayland Support
+  home.packages = with pkgs; [
+    qt5.qtwayland
+    qt6.qtwayland
+    gtk3
+  ];
+
+  # Polkit Agent
+  # TODO Enable polkit agent
+
+  # Statusbar
+  programs.waybar.enable = true;
+  programs.waybar.settings.main = {
+    layer = "top";
+    position = "top";
+    height = 36;
+    spacing = 10;
+    modules-left = ["hyprland/workspaces" ];
+    modules-center = ["clock"];
+    # TODO Bluetooth menu
+    modules-right = ["tray"];
+  };
+
+  # Launcher
+  programs.wofi.enable = true;
+  # TODO Configure wofi
+
+
   # Enable hyprland
   wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.package = null;
   wayland.windowManager.hyprland.portalPackage = null;
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
-    "$terminal" = "kitty";
+    "$terminal" = "xterm";
     "$fileManager" = "nautilus";
     "$menu" = "~/bin/wofi-launch.sh";
+
+    exec-once = [
+      "waybar"
+      "xterm"
+      "swaync"
+    ];
 
     env = [
       "XCURSOR_SIZE,24"
@@ -17,6 +57,41 @@
       "KITTY_DISABLE_WAYLAND,0"
       "XDG_CURRENT_DESKTOP,Hyprland"
     ];
+
+    general = {
+      "gaps_in" = 5;
+      "gaps_out" = 10;
+      "border_size" = 2;
+
+      "col.active_border" = "rgba(f38ba8ff) rgba(fab387ff) rgba(f9e2afff) 45deg";
+      "col.inactive_border" = "rgba(31324400)";
+
+      "resize_on_border" = false;
+      "allow_tearing" = false;
+
+      "layout" = "master";
+    };
+
+    master = {
+      "new_status" = "master";
+      "allow_small_split" = true;
+    };
+
+    xwayland = {
+      "use_nearest_neighbor" = false;
+    };
+
+    decoration = {
+      "rounding" = 10;
+      "rounding_power" = 2;
+
+      blur = {
+        "enabled" = true;
+	"size" = 3;
+	"passes" = 1;
+	"vibrancy" = 0.1696;
+      };
+    };
 
     bind = [
       # Applications

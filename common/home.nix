@@ -7,6 +7,7 @@
   # Packages
   home.packages = with pkgs; [
     nautilus		# File manager
+    xterm		# Fallback terminal
   ];
 
   # Configure Git
