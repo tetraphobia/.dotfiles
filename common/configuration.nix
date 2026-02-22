@@ -4,10 +4,6 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.useOSProber = true;
-
   # Enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -35,7 +31,13 @@
   # Required for home-manager
   environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define user accounts
+    users.users.tetraphobia = {
+    isNormalUser = true;
+    description = "skip";
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "dialout"];
+  };
+
   users.users.skip = {
     isNormalUser = true;
     description = "skip";

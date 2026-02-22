@@ -1,0 +1,116 @@
+@define-color foreground rgb(205, 214, 244);
+@define-color background rgb(17, 17, 27);
+
+* {
+    color: @foreground;
+    font-family: 'Hack Nerd Font Mono';
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    min-height: 30px;
+}
+
+window#waybar {
+    background: alpha(@background, 0.75);
+    border-radius: 10px;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+    background: rgb(24, 24, 37);
+    border-radius: 11px;
+}
+
+.modules-left {
+    background: rgb(24, 24, 37);
+    padding-left: 10px;
+}
+
+.modules-left>widget:last-child>*,
+.modules-center>widget:last-child>*,
+.modules-right>widget:last-child>* {
+    padding-right: 10px;
+}
+
+.modules-right * {
+    padding: 0 20px 0 0;
+}
+
+.modules-right>widget:first-child>* {
+    padding: 0 20px;
+}
+
+#workspaces {
+    background: rgb(30, 30, 46);
+    padding: 0 0px 0 10px;
+    border-radius: 10px;
+    margin-left: -10px;
+}
+
+#workspaces button {
+    all: initial;
+    padding: 0 9px;
+}
+
+#workspaces button.active {
+    background: alpha(@foreground, .2);
+}
+
+#workspaces button:hover {
+    background: alpha(@foreground, .3);
+}
+
+#workspaces button.empty {
+    opacity: 0.3;
+}
+
+#tray {
+    background: rgb(17, 17, 27);
+    border-radius: 10px;
+    padding: 0 0 0 20px;
+    margin: 0 15px 0 0;
+}
+
+#window {
+    padding-left: 10px;
+    border-radius: 0 10px 10px 0;
+}
+
+#clock {
+    background: rgb(24, 24, 37);
+    padding: 0 20px;
+    border-radius: 10px;
+}
+
+#network {
+    background-color: rgb(203, 166, 247);
+    border-radius: 10px 0 0 10px;
+    color: @background;
+    margin-left: -20px;
+    padding: 0 30px 0 20px;
+}
+
+#bluetooth {
+    background-color: rgb(137, 180, 250);
+    border-radius: 10px 0 0 10px;
+    color: @background;
+    margin-left: -10px;
+    padding: 0 30px 0 20px;
+}
+
+#pulseaudio {
+    background-color: rgb(235, 160, 172);
+    border-radius: 10px 0 0 10px;
+    color: @background;
+    margin-left: -10px;
+    padding: 0 30px 0 20px;
+}
+
+#battery {
+    background-color: rgb(243, 139, 168);
+    border-radius: 10px;
+    color: @background;
+    margin-left: -10px;
+    padding: 0 20px;
+}

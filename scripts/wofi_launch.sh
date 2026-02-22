@@ -1,7 +1,0 @@
-$!/usr/bin/env bash
-
-if [[ ! $(pidof wofi) ]]; then
-	wofi
-else
-	pkill wofi
-fi

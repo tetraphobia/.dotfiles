@@ -12,28 +12,25 @@
     qt5.qtwayland
     qt6.qtwayland
     gtk3
+    rose-pine-hyprcursor
   ];
+
+  # Hint Electron apps to use Wayland
+  home.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+  };
 
   # Polkit Agent
   # TODO Enable polkit agent
 
-  # Statusbar
-  programs.waybar.enable = true;
-  programs.waybar.settings.main = {
-    layer = "top";
-    position = "top";
-    height = 36;
-    spacing = 10;
-    modules-left = ["hyprland/workspaces" ];
-    modules-center = ["clock"];
-    # TODO Bluetooth menu
-    modules-right = ["tray"];
+  # Prefer dark mode for GTK apps
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+      cursor-theme = "rose-pine-hyprcursor";
+      cursor-size = 24;
+    };
   };
-
-  # Launcher
-  programs.wofi.enable = true;
-  # TODO Configure wofi
-
 
   # Enable hyprland
   wayland.windowManager.hyprland.enable = true;
@@ -41,19 +38,28 @@
   wayland.windowManager.hyprland.portalPackage = null;
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
-    "$terminal" = "xterm";
+    "$terminal" = "alacritty";
     "$fileManager" = "nautilus";
-    "$menu" = "~/bin/wofi-launch.sh";
+    "$menu" = "hyprlauncher";
+
+    workspace = [
+      "1, default:true"
+      "2"
+      "3"
+      "4"
+      "5"
+      "6"
+    ];
 
     exec-once = [
       "waybar"
-      "xterm"
-      "swaync"
     ];
 
     env = [
-      "XCURSOR_SIZE,24"
       "HYPRCURSOR_SIZE,24"
+      "HYPRCURSOR_THEME,rose-pine-hyprcursor"
+      "XCURSOR_THEME,rose-pine-hyprcursor"
+      "XCURSOR_SIZE,24"
       "KITTY_DISABLE_WAYLAND,0"
       "XDG_CURRENT_DESKTOP,Hyprland"
     ];
@@ -77,6 +83,11 @@
       "allow_small_split" = true;
     };
 
+    misc = {
+      "force_default_wallpaper" = 0;
+      "disable_hyprland_logo" = true;
+    };
+
     xwayland = {
       "use_nearest_neighbor" = false;
     };
@@ -87,9 +98,29 @@
 
       blur = {
         "enabled" = true;
-	"size" = 3;
-	"passes" = 1;
-	"vibrancy" = 0.1696;
+        "size" = 3;
+        "passes" = 1;
+        "vibrancy" = 0.1696;
+      };
+
+      shadow = {
+        enabled = true;
+        range = 20;
+        render_power = 3;
+        color = "rgba(0, 0, 0, 0.5)";
+        offset = "0 5";
+      };
+    };
+
+    input = {
+      "kb_layout" = "us";
+      "kb_options" = "caps:ctrl_modifier";
+      "follow_mouse" = 1;
+      "sensitivity" = 0;
+      "accel_profile" = "flat";
+
+      touchpad = {
+        "natural_scroll" = true;
       };
     };
 
@@ -105,7 +136,7 @@
       # Window Management
       "$mod, Q, killactive,"
       "$mod, P, togglefloating,"
-      "$mod, F, fullscreen, 1,"
+      "$mod, F, fullscreen, 1"
       "$mod, S, layoutmsg, swapwithmaster"
       "$mod, V, togglesplit,"
 
@@ -127,7 +158,6 @@
 
       "$mod, M, layoutmsg, addmaster"
       "$mod CTRL, M, layoutmsg, removemaster"
-
 
       # Navigation
       "$mod, H, movefocus, l"
@@ -153,5 +183,48 @@
       "$mod, mouse:272, movewindow"
       "$mod, mouse:273, resizewindow"
     ];
+
+    windowrule = [
+      "suppressevent maximize, class:.*"
+      "nofocus,class:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
+      "noborder,focus:0"
+    ];
+
+    animations = {
+      "enabled" = "yes";
+
+      "bezier" = [
+        #        NAME,           X0,   Y0,   X1,   Y1
+        "easeOutQuint,   0.23, 1,    0.32, 1"
+        "easeInOutCubic, 0.65, 0.05, 0.36, 1"
+        "linear,         0,    0,    1,    1"
+        "almostLinear,   0.5,  0.5,  0.75, 1"
+        "quick,          0.15, 0,    0.1,  1"
+      ];
+
+      # Default animations, see https://wiki.hypr.land/Configuring/Animations/
+
+      "animation" = [
+        #        NAME,          ONOFF, SPEED, CURVE,        [STYLE]
+        "global,        1,     10,    default"
+        "border,        1,     5.39,  easeOutQuint"
+        "windows,       1,     4.79,  easeOutQuint"
+        "windowsIn,     1,     4.1,   easeOutQuint, popin 87%"
+        "windowsOut,    1,     1.49,  linear,       popin 87%"
+        "fadeIn,        1,     1.73,  almostLinear"
+        "fadeOut,       1,     1.46,  almostLinear"
+        "fade,          1,     3.03,  quick"
+        "layers,        1,     3.81,  easeOutQuint"
+        "layersIn,      1,     4,     easeOutQuint, fade"
+        "layersOut,     1,     1.5,   linear,       fade"
+        "fadeLayersIn,  1,     1.79,  almostLinear"
+        "fadeLayersOut, 1,     1.39,  almostLinear"
+        "workspaces,    1,     1.94,  almostLinear, fade"
+        "workspacesIn,  1,     1.21,  almostLinear, fade"
+        "workspacesOut, 1,     1.94,  almostLinear, fade"
+        "zoomFactor,    1,     7,     quick"
+      ];
+    };
+
   };
 }
