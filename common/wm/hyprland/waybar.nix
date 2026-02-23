@@ -186,5 +186,5 @@
       };
     };
   };
-  programs.waybar.style = builtins.readFile ./waybar.css;
+  programs.waybar.style = builtins.readFile ./waybar/style.css;
 }

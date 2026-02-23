@@ -40,7 +40,7 @@
     "$mod" = "SUPER";
     "$terminal" = "alacritty";
     "$fileManager" = "nautilus";
-    "$menu" = "hyprlauncher";
+    "$menu" = "wofi";
 
     workspace = [
       "1, default:true"
@@ -67,10 +67,10 @@
     general = {
       "gaps_in" = 5;
       "gaps_out" = 10;
-      "border_size" = 2;
+      "border_size" = 1;
 
       "col.active_border" = "rgba(f38ba8ff) rgba(fab387ff) rgba(f9e2afff) 45deg";
-      "col.inactive_border" = "rgba(31324400)";
+      "col.inactive_border" = "rgba(45475aff)";
 
       "resize_on_border" = false;
       "allow_tearing" = false;
@@ -128,7 +128,7 @@
       # Applications
       "$mod, Return, exec, $terminal"
       "$mod, E, exec, $fileManager"
-      "$mod, Super_L, exec, $menu"
+      "$mod, Super_L, exec, pkill wofi || wofi"
 
       # Hyprland Management
       "$mod SHIFT, Q, exec, hyprctl dispatch exit"
@@ -137,6 +137,7 @@
       "$mod, Q, killactive,"
       "$mod, P, togglefloating,"
       "$mod, F, fullscreen, 1"
+      "$mod SHIFT, F, fullscreen, 0"
       "$mod, S, layoutmsg, swapwithmaster"
       "$mod, V, togglesplit,"
 
@@ -187,7 +188,6 @@
     windowrule = [
       "suppressevent maximize, class:.*"
       "nofocus,class:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
-      "noborder,focus:0"
     ];
 
     animations = {

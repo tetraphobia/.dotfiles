@@ -5,6 +5,6 @@
     ./awww.nix
     ./hyprland.nix
     ./waybar.nix
-    ./hyprlauncher.nix
+    ./wofi.nix
     ];
 }

@@ -6,16 +6,47 @@
 
   # Packages
   home.packages = with pkgs; [
-    nautilus		    # File manager
-    xterm		        # Fallback terminal
-    discord             # VoIP
-    telegram-desktop    # IM
+    # General
+    nautilus # File manager
+    xterm # Fallback terminal
+    discord # VoIP
+    telegram-desktop # IM
+    thunderbird # Email
+    obsidian # Notes
+    zotero # Research organization
+    imv # Image viewer
 
     # Neovim dependencies
-    gcc                 # Neovim dependency
+    gcc
+    clang-tools
+    cargo
+    tree-sitter
+    lua5_1
+    lua51Packages.luarocks
     fd
     ripgrep
+    wget
+    unzip
   ];
+
+  # XDG
+  xdg.userDirs = {
+    enable = true;
+    createDirectories = true;
+
+    desktop = "${config.home.homeDirectory}/desktop";
+    documents = "${config.home.homeDirectory}/documents";
+    download = "${config.home.homeDirectory}/downloads";
+    music = "${config.home.homeDirectory}/music";
+    pictures = "${config.home.homeDirectory}/pictures";
+    publicShare = "${config.home.homeDirectory}/public";
+    templates = "${config.home.homeDirectory}/templates";
+    videos = "${config.home.homeDirectory}/videos";
+
+    extraConfig = {
+      XDG_SCREENSHOTS_DIR = "${config.home.homeDirectory}/pictures/screenshots";
+    };
+  };
 
   # Configure Git
   programs.git = {
@@ -43,7 +74,6 @@
     # TODO Set firefox preferences here.
   };
 
-
   # Configure alacritty
   programs.alacritty = {
     enable = true;
@@ -52,14 +82,14 @@
       general.live_config_reload = true;
       window = {
         padding = {
-	  x = 10;
-	  y = 10;
-	};
-	decorations = "none";
+          x = 10;
+          y = 10;
+        };
+        decorations = "none";
       };
       font = {
         normal.family = "Hack Nerd Font Mono";
-	size = 11;
+        size = 11;
       };
     };
   };

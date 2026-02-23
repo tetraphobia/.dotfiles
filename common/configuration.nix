@@ -5,7 +5,10 @@
   nixpkgs.config.allowUnfree = true;
 
   # Enable flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -29,19 +32,32 @@
   };
 
   # Required for home-manager
-  environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
+  environment.pathsToLink = [
+    "/share/applications"
+    "/share/xdg-desktop-portal"
+  ];
 
   # Define user accounts
-    users.users.tetraphobia = {
+  users.users.tetraphobia = {
     isNormalUser = true;
     description = "skip";
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" "dialout"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "libvirtd"
+      "dialout"
+    ];
   };
 
   users.users.skip = {
     isNormalUser = true;
     description = "skip";
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" "dialout"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "libvirtd"
+      "dialout"
+    ];
   };
 
   # Required to execute dynamically linked binaries.
@@ -51,6 +67,9 @@
       stdenv.cc.cc
     ];
   };
+
+  # Enable for virtualization
+  virtualisation.libvirtd.enable = true;
 
   # Default to neovim for most things
   programs.neovim = {
