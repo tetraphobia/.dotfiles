@@ -46,6 +46,7 @@
       "wheel"
       "libvirtd"
       "dialout"
+      "docker"
     ];
   };
 
@@ -57,7 +58,13 @@
       "wheel"
       "libvirtd"
       "dialout"
+      "docker"
     ];
+  };
+
+  # Enable docker
+  virtualisation.docker = {
+    enable = true;
   };
 
   # Required to execute dynamically linked binaries.

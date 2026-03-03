@@ -1,10 +1,11 @@
-{ config, pkgs, ...}:
+{ config, pkgs, ... }:
 
 {
-    imports = [
+  imports = [
     ./awww.nix
     ./hyprland.nix
     ./waybar.nix
     ./wofi.nix
-    ];
+    ./swaync.nix
+  ];
 }

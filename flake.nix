@@ -2,19 +2,39 @@
   description = "skip's nixos config";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    awww.url = "git+https://codeberg.org/LGFae/awww";
-    hyprlauncher.url = "github:hyprwm/hyprlauncher";
+
+    awww = {
+      url = "git+https://codeberg.org/LGFae/awww";
+    };
+
+    hyprlauncher = {
+      url = "github:hyprwm/hyprlauncher";
+    };
+
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    firefox-nightly = {
+      url = "github:nix-community/flake-firefox-nightly";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
     inputs@{
       self,
       nixpkgs,
+      nur,
+      firefox-nightly,
       home-manager,
       ...
     }:
@@ -29,6 +49,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "backup";
               home-manager.extraSpecialArgs = { inherit inputs; };
               home-manager.users.skip = {
                 imports = [
@@ -37,6 +58,12 @@
                   ./hosts/zohshia
                 ];
               };
+            }
+            {
+              nixpkgs.overlays = [
+                nur.overlays.default
+                firefox-nightly.overlays.default
+              ];
             }
           ];
         };

@@ -1,0 +1,15 @@
+{
+    "manifest_version": 3,
+    "name": "Skip's Launchpage",
+    "version": "1.0",
+    "description": "A lil launchpage with Canvas LMS integration and a cute critter :3c.",
+    "author": "Jacob Teddy",
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "skip-dashboard@local"
+        }
+    },
+    "chrome_url_overrides": {
+        "newtab": "index.html"
+    }
+}

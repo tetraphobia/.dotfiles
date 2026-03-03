@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./apps
-    ./home.nix
+    ./firefox.nix
   ];
 }

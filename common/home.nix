@@ -44,13 +44,12 @@
     videos = "${config.home.homeDirectory}/videos";
 
     extraConfig = {
-      XDG_SCREENSHOTS_DIR = "${config.home.homeDirectory}/pictures/screenshots";
+      SCREENSHOTS = "${config.home.homeDirectory}/pictures/screenshots";
     };
   };
 
   # Configure Git
   programs.git = {
-    # TODO Configure git
     enable = true;
     settings.user = {
       name = "Jacob Teddy";
@@ -66,12 +65,6 @@
     bashrcExtra = ''
       export PATH="$HOME/.dotfiles/scripts:$PATH"
     '';
-  };
-
-  # Configure firefox
-  programs.firefox = {
-    enable = true;
-    # TODO Set firefox preferences here.
   };
 
   # Configure alacritty
@@ -92,11 +85,6 @@
         size = 11;
       };
     };
-  };
-
-  # Fallback terminal for Hyprland
-  programs.kitty = {
-    enable = true;
   };
 
   home.stateVersion = "25.11";

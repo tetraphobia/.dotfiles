@@ -1,0 +1,195 @@
+:root {
+    --bg-color: #1c1b22;
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1aa;
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-hover: rgba(255, 255, 255, 0.08);
+    --accent-glow: rgba(99, 102, 241, 0.3);
+    --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 800px;
+    padding: 2rem;
+    margin-top: 15vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5rem;
+}
+
+header {
+    text-align: center;
+}
+
+#clock {
+    font-family: 'Outfit', sans-serif;
+    font-size: 6rem;
+    font-weight: 800;
+    letter-spacing: -2px;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+#greeting {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 3rem;
+}
+
+.search-container {
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    z-index: 20;
+}
+
+.walking-icon {
+    position: absolute;
+    top: -57px;
+    left: 40px;
+    height: 60px;
+    width: auto;
+    z-index: 10;
+    pointer-events: none;
+    filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.5));
+    transition: transform var(--transition);
+}
+
+.search-container:focus-within .walking-icon {
+    transform: translateY(-2px);
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 0.5rem 1.5rem;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 24px -8px rgba(0, 0, 0, 0.5);
+    transition: all var(--transition);
+}
+
+.search-box:focus-within {
+    background: var(--glass-hover);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 10px 40px -10px var(--accent-glow);
+    transform: translateY(-2px);
+}
+
+.search-box i {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+
+#search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    padding: 1rem 0;
+    outline: none;
+    font-family: inherit;
+}
+
+#search-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+#links-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    #links-grid {
+        grid-template-columns: repeat(7, 1fr);
+    }
+}
+
+.link-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    text-decoration: none;
+    color: var(--text-secondary);
+    padding: 1rem;
+    border-radius: 16px;
+    transition: all var(--transition);
+}
+
+.link-card:hover {
+    background: var(--glass-bg);
+    transform: translateY(-5px);
+    color: var(--text-primary);
+}
+
+.icon-wrapper {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.link-card:hover .icon-wrapper {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 24px -8px var(--hover-color, rgba(255, 255, 255, 0.3));
+    color: var(--hover-color, #ffffff);
+}
+
+.link-title {
+    font-size: 0.8rem;
+    font-weight: 500;
+    opacity: 0.8;
+    text-align: center;
+    transition: opacity 0.3s;
+}
+
+.link-card:hover .link-title {
+    opacity: 1;
+}

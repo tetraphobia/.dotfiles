@@ -1,19 +1,28 @@
 { config, pkgs, ... }:
 
+let
+  waybarApplets = [
+    "blueberry.py"
+    "org.pulseaudio.pavucontrol"
+    "nm-connection-editor"
+  ];
+in
 {
   # Notification daemon
-  services.swaync = {
-    enable = true;
-    # TODO Configure swaync
-  };
-
   # Qt Wayland Support
   home.packages = with pkgs; [
     qt5.qtwayland
     qt6.qtwayland
     gtk3
-    rose-pine-hyprcursor
+    hyprshot
+    # rose-pine-hyprcursor
+    catppuccin-cursors.mochaLight
   ];
+
+  # Fallback terminal for Hyprland
+  programs.kitty = {
+    enable = true;
+  };
 
   # Hint Electron apps to use Wayland
   home.sessionVariables = {
@@ -27,7 +36,7 @@
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
-      cursor-theme = "rose-pine-hyprcursor";
+      cursor-theme = "catppuccin-mocha-light-cursors";
       cursor-size = 24;
     };
   };
@@ -37,6 +46,12 @@
   wayland.windowManager.hyprland.package = null;
   wayland.windowManager.hyprland.portalPackage = null;
   wayland.windowManager.hyprland.settings = {
+    monitor = [
+      "eDP-1, preferred, auto, 1.25"
+      "DP-2, preferred, auto, 1.25"
+      "DP-3, preferred, auto, 1.25"
+      "DP-4, preferred, auto, 1.25"
+    ];
     "$mod" = "SUPER";
     "$terminal" = "alacritty";
     "$fileManager" = "nautilus";
@@ -57,8 +72,8 @@
 
     env = [
       "HYPRCURSOR_SIZE,24"
-      "HYPRCURSOR_THEME,rose-pine-hyprcursor"
-      "XCURSOR_THEME,rose-pine-hyprcursor"
+      "HYPRCURSOR_THEME,catppuccin-mocha-light-cursors"
+      "XCURSOR_THEME,catppuccin-mocha-light-cursors"
       "XCURSOR_SIZE,24"
       "KITTY_DISABLE_WAYLAND,0"
       "XDG_CURRENT_DESKTOP,Hyprland"
@@ -176,7 +191,21 @@
       "$mod, 8, workspace, 8"
       "$mod, 9, workspace, 9"
       "$mod, 0, workspace, 10"
+    ];
 
+    bindel = [
+      # Volume
+      ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+      ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+      ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+      ",XF86MonBrightnessUp, exec, brightnessctl -e4 -n2 set 5%+"
+      ",XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-"
+
+      # Screenshots
+      ", PRINT, exec, hyprshot -m region"
+      "SHIFT, PRINT, exec, hyprshot -m region"
+      "SHIFT CTRL, PRINT, exec, hyprshot -m region"
     ];
 
     bindm = [
@@ -186,9 +215,13 @@
     ];
 
     windowrule = [
-      "suppressevent maximize, class:.*"
-      "nofocus,class:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
-    ];
+      "match:class (imv), float 1"
+    ]
+    # Waybar applets
+    ++ map (app: "match:class (${app}), float 1") waybarApplets
+    ++ map (app: "match:class (${app}), move 100%-w-20 60") waybarApplets
+    ++ map (app: "match:class (${app}), no_initial_focus 1") waybarApplets;
+
 
     animations = {
       "enabled" = "yes";

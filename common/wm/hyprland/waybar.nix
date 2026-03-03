@@ -4,6 +4,7 @@
   home.packages = with pkgs; [
     pavucontrol
     blueberry
+    networkmanagerapplet
   ];
 
   programs.waybar.enable = true;
@@ -101,15 +102,15 @@
 
     "pulseaudio" = {
       "format" = "<span size='26pt' rise='-8000'>{icon}</span> {volume}%";
-      "on-click" = "pavucontrol";
+      "on-click" = "pkill pavucontrol || pavucontrol";
       "tooltip-format" = "Volume set to {volume}%";
       "scroll-step" = 5;
-      "format-muted" = "";
+      "format-muted" = "<span size='26pt' rise='-8000'></span>";
       "format-icons" = {
         "default" = [
-          ""
-          ""
-          ""
+          "<span size='26pt' rise='-8000'></span>"
+          "<span size='26pt' rise='-8000'></span>"
+          "<span size='26pt' rise='-8000'></span>"
         ];
       };
     };
@@ -136,14 +137,14 @@
       "tooltip-format-disconnected" = "Disconnected";
       "interval" = 3;
       "spacing" = 1;
-      # "on-click" = "";
+      "on-click" = "pkill -f nm-connection-editor || nm-connection-editor";
     };
     "bluetooth" = {
       "format" = "<span size='x-large'></span>";
       "format-disabled" = "<span size='x-large'>󰂲</span>";
       "format-connected" = "<span size='x-large'></span>";
       "tooltip-format" = "Devices connected: {num_connections}";
-      "on-click" = "blueberry";
+      "on-click" = "pkill blueberry || blueberry";
     };
     "battery" = {
       "format" = "<span size='18pt' rise='-3000'>{icon}</span> {capacity}%";

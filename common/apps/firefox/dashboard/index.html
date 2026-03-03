@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Tab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@800&family=Inter:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1 id="clock">00:00</h1>
+            <h2 id="greeting">Good evening, User.</h2>
+        </header>
+
+        <main>
+            <div class="search-container">
+                <img src="assets/skip.gif" alt="Skip walking" class="walking-icon">
+                <form id="search-form" action="https://duckduckgo.com/" method="get">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" name="q" id="search-input" placeholder="Search the web or type a URL..."
+                            autocomplete="off" autofocus>
+                    </div>
+                </form>
+            </div>
+
+            <div id="links-grid"></div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
